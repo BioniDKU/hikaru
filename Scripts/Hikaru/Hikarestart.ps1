@@ -65,7 +65,7 @@ function Restart-HikaruShell {
 	)
 	if (-not $NoSpin) {Start-ShellSpinner}
 	if (-not $NoStop) {Write-Host "Now restarting Explorer..." -ForegroundColor White; Exit-HikaruShell $Method}
-	if ($HKBoot) {if (Check-SafeMode) {Start-Process "$env:SYSTEMDRIVE\Bionic\Hikaru\HikaruBuildMod.exe"} else {Start-Process powershell -WindowStyle Hidden -ArgumentList "Start-ScheduledTask -TaskName 'BioniDKU Windows Build String Modifier'"}}
+	if ($HKBoot) {if (Check-SafeMode) {Start-Process "$env:SYSTEMDRIVE\Bionic\Hikaru\HikaruBuildMod.exe"} else {Start-Process powershell -WindowStyle Hidden -ArgumentList "Start-ScheduledTask -TaskName 'BioniDKU Windows Build String Modifier' -TaskPath '\BioniDKU\'"}}
 	
 	$build = [System.Environment]::OSVersion.Version | Select-Object -ExpandProperty "Build"
 	if ($build -le 10586) {$hkrbuildkey = "CurrentBuildNumber"} else {$hkrbuildkey = "BuildLab"}

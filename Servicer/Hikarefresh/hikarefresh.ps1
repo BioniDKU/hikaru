@@ -1,7 +1,5 @@
 # Hikaru-chan background update checker - (c) Bionic Butter
 
-$hkv = "32"
-
 function Show-NotifyBalloon {
 	param (
 		[Parameter(Mandatory=$True,Position=0)]
@@ -40,7 +38,7 @@ function Push-CheckResults {
 if (-not (Test-Path -Path "$PSScriptRoot\Delivery")) {New-Item -Path $PSScriptRoot -Name Delivery -itemType Directory}
 $launchedfromxm = (Get-ItemProperty -Path "HKCU:\Software\Hikaru-chan").UpdateCheckerLaunchedFrom
 Remove-Item -Path $env:SYSTEMDRIVE\Bionic\Hikarefresh\Hikarefreshinfo.ps1 -Force
-Start-Process $env:SYSTEMDRIVE\Bionic\Hikarefresh\wget.exe -Wait -NoNewWindow -ArgumentList "https://github.com/Bionic-OSE/BioniDKU-hikaru/releases/latest/download/Servicinfo.${hkv}.ps1 -O Servicinfo.ps1" -WorkingDirectory "$env:SYSTEMDRIVE\Bionic\Hikarefresh"
+Start-Process $env:SYSTEMDRIVE\Bionic\Hikarefresh\wget.exe -Wait -NoNewWindow -ArgumentList "https://github.com/BioniDKU/hikaru/releases/latest/download/Servicinfo.ps1 -O Servicinfo.ps1" -WorkingDirectory "$env:SYSTEMDRIVE\Bionic\Hikarefresh"
 
 # Update the serivcer and restart it first
 
@@ -55,7 +53,7 @@ if ($serviceremote -eq $null) {
 elseif ($serviceremote -ne $servicer) {
 	if ((Test-Path -Path "$PSScriptRoot\Delivery\Servicer.7z.old") -eq $true) {Remove-Item -Path "$PSScriptRoot\Delivery\Servicer.7z.old" -Force}
 	if ((Test-Path -Path "$PSScriptRoot\Delivery\Servicer.7z") -eq $true) {Rename-Item -Path "$PSScriptRoot\Delivery\Servicer.7z" -NewName Servicer.7z.old}
-	Start-Process $env:SYSTEMDRIVE\Bionic\Hikarefresh\wget.exe -Wait -NoNewWindow -ArgumentList "https://github.com/Bionic-OSE/BioniDKU-hikaru/releases/latest/download/Servicer.7z" -WorkingDirectory "$PSScriptRoot\Delivery"
+	Start-Process $env:SYSTEMDRIVE\Bionic\Hikarefresh\wget.exe -Wait -NoNewWindow -ArgumentList "https://github.com/BioniDKU/hikaru/releases/latest/download/Servicer.7z" -WorkingDirectory "$PSScriptRoot\Delivery"
 		if (Test-Path -Path "$PSScriptRoot\Delivery\Servicer.7z" -PathType Leaf) {
 			Start-Process $env:SYSTEMDRIVE\Bionic\Hikarefresh\7za.exe -Wait -NoNewWindow -ArgumentList "x $PSScriptRoot\Delivery\Servicer.7z -pBioniDKU -o$env:SYSTEMDRIVE\Bionic -aoa"
 			Remove-Item -Path "$env:SYSTEMDRIVE\Bionic\Hikarefresh\ServicinFOLD.ps1" -Force
@@ -68,12 +66,12 @@ elseif ($serviceremote -ne $servicer) {
 
 # Then we check for updates for the rest
 
-Remove-Item -Path $env:SYSTEMDRIVE\Bionic\Hikarefresh\Hikarinfo.ps1 -Force
-Start-Process $env:SYSTEMDRIVE\Bionic\Hikarefresh\wget.exe -Wait -NoNewWindow -ArgumentList "https://github.com/Bionic-OSE/BioniDKU-hikaru/releases/latest/download/Hikarinfo.${hkv}.ps1 -O Hikarinfo.ps1" -WorkingDirectory "$env:SYSTEMDRIVE\Bionic\Hikarefresh"
+Remove-Item -Path $env:SYSTEMDRIVE\Bionic\Hikarefresh\Versinfo.ps1 -Force
+Start-Process $env:SYSTEMDRIVE\Bionic\Hikarefresh\wget.exe -Wait -NoNewWindow -ArgumentList "https://github.com/BioniDKU/hikaru/releases/latest/download/Versinfo.ps1 -O Versinfo.ps1" -WorkingDirectory "$env:SYSTEMDRIVE\Bionic\Hikarefresh"
 
-. $env:SYSTEMDRIVE\Bionic\Hikarefresh\Hikarinfo.ps1
+. $env:SYSTEMDRIVE\Bionic\Hikarefresh\Versinfo.ps1
 $versionremote = $version
-. $env:SYSTEMDRIVE\Bionic\Hikarefresh\HikarinFOLD.ps1
+. $env:SYSTEMDRIVE\Bionic\Hikarefresh\VersinFOLD.ps1
 
 if ($versionremote -eq $null) {
 	Push-CheckResults 2

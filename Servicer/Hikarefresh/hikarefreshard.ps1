@@ -8,7 +8,7 @@ function Show-Branding {
 }
 
 Show-Branding
-Write-Host "Updating hard (executables) layer" -ForegroundColor White; Write-Host " "
+Write-Host "Updating resources layer" -ForegroundColor White; Write-Host " "
 
 . $env:SYSTEMDRIVE\Bionic\Hikaru\Hikarestart.ps1
 $tempuid = -join ((48..57) + (97..122) | Get-Random -Count 32 | % {[char]$_})
@@ -28,7 +28,7 @@ if (Check-SafeMode) {
 	if ($bmdchk -ne $null) {Stop-Process -Name "HikaruBuildMod" -Force}
 }
 Start-Sleep -Seconds 2
-Start-Process $env:TEMP\$tempuid\7za.exe -Wait -NoNewWindow -ArgumentList "x $env:SYSTEMDRIVE\Bionic\Executables.7z -pBioniDKU -o$env:SYSTEMDRIVE\Bionic -aoa"
+Start-Process $env:TEMP\$tempuid\7za.exe -Wait -NoNewWindow -ArgumentList "x $env:SYSTEMDRIVE\Bionic\Resources.7z -pBioniDKU -o$env:SYSTEMDRIVE\Bionic -aoa"
 Remove-Item -Path $env:TEMP\$tempuid -Recurse -Force
 
 & $env:SYSTEMDRIVE\Bionic\Hikarefresh\Hikarefreshvi.ps1
@@ -37,8 +37,8 @@ if (Check-SafeMode) {
 	Start-Process $env:SYSTEMDRIVE\Bionic\Hikaru\HikaruQML.exe
 	Start-Process $env:SYSTEMDRIVE\Bionic\Hikaru\HikaruBuildMod.exe
 } else {
-	Start-ScheduledTask -TaskName 'BioniDKU Hot Keys Service' -ErrorAction SilentlyContinue
-	Start-ScheduledTask -TaskName 'BioniDKU Windows Build String Modifier' -ErrorAction SilentlyContinue
+	Start-ScheduledTask -TaskName 'BioniDKU Hot Keys Service' -TaskPath '\BioniDKU\' -ErrorAction SilentlyContinue
+	Start-ScheduledTask -TaskName 'BioniDKU Windows Build String Modifier' -TaskPath '\BioniDKU\' -ErrorAction SilentlyContinue
 }
 Write-Host " "; Write-Host "Update completed" -ForegroundColor Black -BackgroundColor White
 Start-Sleep -Seconds 5
