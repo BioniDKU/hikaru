@@ -34,5 +34,5 @@
 @echo off
 rem ####### Hikaru-chan tray launcher by Bionic Butter #######
 
-powershell Start-ScheduledTask -TaskName 'BioniDKU Menus System Hot Keys Service'
+powershell Start-ScheduledTask -TaskName 'BioniDKU Menus System Hot Keys Service' -TaskPath '\BioniDKU\'
 exit
